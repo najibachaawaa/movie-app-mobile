@@ -3,10 +3,9 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 const MovieCard = ({ title, imageUrl, description, id }) => {
   return (
     <TouchableOpacity style={styles.cardWrapper}>
-      <Image source={{ uri: "imageUrl" }} style={styles.cardImage} />
+      <Image source={{ uri: imageUrl }} style={styles.cardImage} />
       <View style={styles.cardContent}>
-        <Text style={styles.cardTitle}>{"test"}</Text>
-        <Text style={styles.cardDescription}>{"description"}</Text>
+        <Text style={styles.cardTitle}>{title}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -19,12 +18,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 9,
-    width: 350,
+    width: 320,
     backgroundColor: "#fff",
     boxShadow: "0px 6px 17px 0px rgba(0, 0, 0, 0.4)",
     padding: 0,
     overflow: "hidden",
-    height: 350,
+    height: 300,
     margin: 10,
   },
   cardImage: {
@@ -38,7 +37,7 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     color: "#333333",
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
   },
   cardDescription: {
