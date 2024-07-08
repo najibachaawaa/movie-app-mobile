@@ -1,11 +1,11 @@
-import { useState } from "react";
 import { View, TextInput, Button, StyleSheet } from "react-native";
+import { useMovieContext } from "../contexts/MovieContext";
 
 const SearchScreen = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const { searchQuery, setSearchQuery, handleSearch } = useMovieContext();
 
   const handleSearchButton = () => {
-    //
+    handleSearch(searchQuery);
   };
 
   return (
@@ -25,14 +25,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row",
     alignItems: "center",
+    width: "80%",
+    marginLeft: "10%",
+    marginTop: 10,
   },
   input: {
     flex: 1,
     height: 40,
     borderColor: "gray",
     borderWidth: 1,
-    width: "60%",
     borderRadius: 10,
+    marginRight: 10,
   },
 });
 

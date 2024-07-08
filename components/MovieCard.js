@@ -1,11 +1,15 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { useNavigation } from '@react-navigation/native';
-const MovieCard = ({ title, imageUrl,id }) => {
-    const navigation = useNavigation();
+import { useNavigation } from "@react-navigation/native";
+import { useMovieContext } from '../contexts/MovieContext';
+const MovieCard = ({ title, imageUrl, id }) => {
+  const navigation = useNavigation();
+  const { handleSelectMovie } = useMovieContext();
 
-    const handlePress = () => {
-      navigation.navigate('Details', { id });
-    };
+  const handlePress = () => {
+    handleSelectMovie(id);
+    navigation.navigate("MovieDetails");
+  };
+
   return (
     <TouchableOpacity style={styles.cardWrapper} onPress={handlePress}>
       <Image source={{ uri: imageUrl }} style={styles.cardImage} />
@@ -30,8 +34,9 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     height: 300,
     margin: 10,
-    cursor: "pointer",/* Change the cursor to pointer */
-  transition: "transform 0.2s", /* Smooth transition for the transform property */
+    cursor: "pointer" /* Change the cursor to pointer */,
+    transition:
+      "transform 0.2s" /* Smooth transition for the transform property */,
   },
   cardImage: {
     width: "100%",

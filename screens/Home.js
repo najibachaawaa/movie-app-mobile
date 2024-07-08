@@ -8,7 +8,7 @@ const Home = () => {
 
   useEffect(() => {
     // Fetch movies from the API
-    fetch("http://www.omdbapi.com/?s=star&apikey=25fdf932")
+    fetch("http://www.omdbapi.com/?s=all&apikey=25fdf932")
       .then((response) => response.json())
       .then((data) => setMovies(data.Search));
   }, []);
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f5f5f5",
-    width
+  
   },
 });
 
