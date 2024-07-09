@@ -1,32 +1,26 @@
-import { useEffect, useState } from "react";
 import { Text, Image, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useMovieContext } from "../contexts/MovieContext";
 
-const DetailsScreen = ({ route }) => {
-  const { id } = route.params;
-  const [movie, setmovie] = useState(null);
+const DetailsScreen = () => {
+  const { selectedMovie } = useMovieContext();
 
-  useEffect(() => {
-    fetch(`http://www.omdbapi.com/?i=${id}&apikey=25fdf932`)
-      .then((response) => response.json())
-      .then((data) => setmovie(data));
-  }, [id]);
-
-  if (!movie) {
+  if (!selectedMovie) {
     return (
       <SafeAreaView style={styles.container}>
         <Text>Loading...</Text>
       </SafeAreaView>
     );
   }
-  const { Poster, Title, Year, Plot } = movie;
+  const { Poster, Title, Year, Plot, Director } = selectedMovie;
   return (
     <SafeAreaView style={styles.container}>
-      <Image source={{ uri: Poster }} style={styles.image} />
       <Text style={styles.title}>
+        {" "}
         {Title}-{Year}
       </Text>
-
+      <Image source={{ uri: Poster }} style={styles.image} />
+      <Text style={styles.plot}>{Direcotr}</Text>
       <Text style={styles.plot}>{Plot}</Text>
     </SafeAreaView>
   );
@@ -36,10 +30,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-     padding: 16,
+    padding: 16,
     backgroundColor: "#f5f5f5",
-    height:500,
-    border:"solid red" 
+    height: 500,
   },
   image: {
     width: "100%",
@@ -50,6 +43,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginVertical: 8,
+    marginBottom: 20,
   },
   year: {
     fontSize: 18,

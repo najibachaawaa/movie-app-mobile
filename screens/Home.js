@@ -1,17 +1,10 @@
-import { useEffect, useState } from "react";
 import { View, FlatList, StyleSheet } from "react-native";
 import MovieCard from "../components/MovieCard";
 import SearchScreen from "../components/SerachInput";
+import { useMovieContext } from "../contexts/MovieContext";
 
 const Home = () => {
-  const [movies, setMovies] = useState([]);
-
-  useEffect(() => {
-    // Fetch movies from the API
-    fetch("http://www.omdbapi.com/?s=all&apikey=25fdf932")
-      .then((response) => response.json())
-      .then((data) => setMovies(data.Search));
-  }, []);
+  const { movies } = useMovieContext();
 
   return (
     <View style={styles.container}>
@@ -35,7 +28,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f5f5f5",
-  
   },
 });
 

@@ -1,4 +1,5 @@
-import { createContext, useState, useContext } from "react";
+
+import { createContext, useState, useContext, useEffect } from "react";
 import axios from "axios";
 
 const MovieContext = createContext();
@@ -9,28 +10,37 @@ export const MovieProvider = ({ children }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
-  const OMDB_API_KEY = "25fdf932"; // Replace with your actual API key
+  const [movies, setMovies] = useState([]);
+  const OMDB_API_KEY = "25fdf932";
   const OMDB_API_URL = `http://www.omdbapi.com/?apikey=${OMDB_API_KEY}`;
 
-  const handleSearch = async (query) => {
+  useEffect(() => {
+    fetchMovies("all");
+  }, []);
+
+  const fetchMovies = async (query) => {
     try {
       const response = await axios.get(`${OMDB_API_URL}&s=${query}`);
-      setSearchResults(response.data.Search || []);
+      setMovies(response.data.Search || []);
     } catch (error) {
       console.error("Error fetching movies:", error);
-      setSearchResults([]);
+      setMovies([]);
     }
   };
 
-  const handleSelectMovie = async (movieId) => {
-    try {
-      const response = await axios.get(`${OMDB_API_URL}&i=${movieId}`);
-      setSelectedMovie(response.data);
-    } catch (error) {
-      console.error("Error fetching movie details:", error);
-      setSelectedMovie(null);
-    }
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    fetchMovies(query);
   };
+    const handleSelectMovie = async (movieId) => {
+     try {
+         const response = await axios.get(`${OMDB_API_URL}&i=${movieId}`);
+           setSelectedMovie(response.data);
+      } catch (error) {
+         console.error("Error fetching movie details:", error);
+          setSelectedMovie(null);
+    }
+     };
 
   return (
     <MovieContext.Provider
@@ -38,9 +48,11 @@ export const MovieProvider = ({ children }) => {
         searchQuery,
         setSearchQuery,
         searchResults,
-        setSelectedMovie,
+        setSearchResults,
         handleSearch,
         handleSelectMovie,
+        selectedMovie,
+        movies,
       }}
     >
       {children}

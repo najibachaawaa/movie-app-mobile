@@ -7,7 +7,7 @@ const MovieCard = ({ title, imageUrl, id }) => {
 
   const handlePress = () => {
     handleSelectMovie(id);
-    navigation.navigate("MovieDetails");
+    navigation.navigate("Details");
   };
 
   return (
